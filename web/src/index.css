@@ -1,0 +1,17 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --nav-height: 2rem;
+}
+
+body {
+  @apply min-h-screen w-screen flex flex-col font-body overflow-hidden;
+}
+
+#root {
+  @apply h-full w-full grow flex flex-col;
+}
