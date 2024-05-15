@@ -1,17 +1,17 @@
 import { createBrowserRouter } from "react-router-dom";
 import Home from "../pages/home";
 import NotFound from "../pages/not-found";
-import Layout from "../layout";
 import Gallery from "../pages/gallery";
-import Profile from "../pages/profile";
 import Blog from "../pages/blog";
 import Post from "../pages/post";
 import NewPost from "../pages/post/new-post";
+import App from "../App";
+import EditPost from "../pages/post/edit-post";
 
 export const router = createBrowserRouter([
   {
     path: "/",
-    element: <Layout />,
+    element: <App />,
     children: [
       {
         path: "/",
@@ -26,16 +26,16 @@ export const router = createBrowserRouter([
         element: <NewPost />,
       },
       {
+        path: "/posts/edit/:id",
+        element: <EditPost />,
+      },
+      {
         path: "/post/:id",
         element: <Post />,
       },
       {
         path: "/gallery",
         element: <Gallery />,
-      },
-      {
-        path: "/profile",
-        element: <Profile />,
       },
       {
         path: "*",

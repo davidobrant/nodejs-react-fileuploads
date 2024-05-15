@@ -30,7 +30,7 @@ postController.getPostById = async (req, res) => {
 postController.createPost = async (req, res) => {
   upload.single("image")(req, res, async (error) => {
     if (error) {
-      res.status(400).json({ message: "Error uploading image...", error});
+      res.status(400).json({ message: "Error uploading image...", error });
     }
 
     try {
@@ -68,25 +68,61 @@ postController.createPost = async (req, res) => {
 };
 
 postController.updatePost = async (req, res) => {
-  try {
-    const postId = Number(req.params.id);
-    const { title, content } = req.body;
-
-    if (!title || !content) {
-      res.status(400).json({ error: "Title and content are required" });
-      return;
+  upload.single("image")(req, res, async (error) => {
+    if (error) {
+      res.status(400).json({ message: "Error uploading image...", error });
     }
+    try {
+      const postId = Number(req.params.id);
+      const { title, content } = req.body;
 
-    const updatedPost = await db.updatePost({
-      id: postId,
-      title,
-      content,
-    });
+      if (!title || !content) {
+        res.status(400).json({ error: "Title and content are required" });
+        return;
+      }
 
-    res.status(200).json(updatedPost);
-  } catch (err) {
-    res.status(500).json(ERROR.server(err));
-  }
+      let newImageUrl;
+      let newImageName;
+
+      const file = req.file;
+      if (file) {
+        const { mimetype, filename, originalname } = file;
+        if (mimetype.toString().startsWith("image/")) {
+          newImageUrl = PUBLIC_STATIC_URL + filename;
+          newImageName = originalname;
+        }
+      }
+
+      const postToUpdate = await db.getPostById(postId);
+
+      if (newImageUrl && postToUpdate.imageurl) {
+        const oldImagePath = path.join(
+          DIRNAME,
+          "uploads",
+          postToUpdate.imageurl.replace(PUBLIC_STATIC_URL, "")
+        );
+        if (fs.existsSync(oldImagePath)) {
+          fs.unlinkSync(oldImagePath);
+        }
+      }
+
+      const updatedPostData = {
+        id: postId,
+        title,
+        content,
+      };
+
+      if (newImageUrl) {
+        updatedPostData.imageUrl = newImageUrl;
+        updatedPostData.imageName = newImageName;
+      }
+
+      const updatedPost = await db.updatePost(updatedPostData);
+      res.status(200).json(updatedPost);
+    } catch (err) {
+      res.status(500).json(ERROR.server(err));
+    }
+  });
 };
 
 postController.deletePost = async (req, res) => {

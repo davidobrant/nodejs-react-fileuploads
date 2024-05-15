@@ -1,15 +1,18 @@
 import { useForm } from "react-hook-form";
 import usePosts from "../../hooks/use-posts";
+import { postProps } from "../../PropTypes";
+import { useParams } from "react-router-dom";
 
-const NewPostForm = () => {
+const EditPostForm = () => {
+  const { id } = useParams();
+  const { post, edit } = usePosts(id);
+
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors, isValid },
   } = useForm();
-
-  const { create } = usePosts();
 
   const onSubmit = async (data) => {
     const formData = new FormData();
@@ -19,10 +22,14 @@ const NewPostForm = () => {
       formData.append("image", data.image[0]);
     }
 
-    await create(formData, {
+    await edit(formData, {
       onSuccess: () => reset(),
     });
   };
+
+  if (!post) {
+    return null;
+  }
 
   return (
     <>
@@ -31,43 +38,47 @@ const NewPostForm = () => {
         className="flex flex-col gap-4 items-center"
       >
         <div>
-          {/* <label htmlFor="title">Title:</label> */}
           <input
             type="text"
             id="title"
             placeholder="title"
+            defaultValue={post.title}
             {...register("title", { required: "Title is required" })}
           />
           {errors.title && <p>{errors.title.message}</p>}
         </div>
         <div>
-          {/* <label htmlFor="content">Content:</label> */}
           <textarea
             id="content"
             placeholder="content"
+            defaultValue={post.content}
             {...register("content", { required: "Content is required" })}
           />
           {errors.content && <p>{errors.content.message}</p>}
         </div>
-        <div>
-          {/* <label htmlFor="image">Image:</label> */}
-          <input
-            type="file"
-            id="image"
-            {...register("image")}
-            placeholder="image"
-          />
+        <div className="flex flex-col items-center">
+          {post.imageurl && (
+            <img
+              src={post.imageurl}
+              alt="post"
+              style={{ maxWidth: "100px" }}
+              className="mb-4"
+            />
+          )}
+          <input type="file" id="image" {...register("image")} />
         </div>
         <button
           type="submit"
-          disabled={!isValid}
+        //   disabled={!isValid}
           className="border border-slate-700 rounded-md px-2 py-.5 cursor-pointer"
         >
-          Submit
+          Save
         </button>
       </form>
     </>
   );
 };
 
-export default NewPostForm;
+export default EditPostForm;
+
+EditPostForm.propTypes = postProps;

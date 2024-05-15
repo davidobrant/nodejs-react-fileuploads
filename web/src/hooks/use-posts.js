@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { getPostById, getAllPosts } from "../api/queries";
-import { createPost, deletePost } from "../api/mutations";
+import { createPost, deletePost, editPost } from "../api/mutations";
 
 const usePosts = (postId) => {
   const queryClient = useQueryClient();
@@ -35,6 +35,16 @@ const usePosts = (postId) => {
   });
 
   const {
+    mutateAsync: edit,
+    isLoading: loadingEdit,
+    isError: errorEdit,
+    onSuccess: successEdit,
+  } = useMutation({
+    mutationFn: (payload) => editPost({ postId, payload }),
+    onSuccess: () => queryClient.invalidateQueries("post", postId),
+  });
+
+  const {
     mutateAsync: deleteFn,
     isLoading: loadingDelete,
     isError: errorDelete,
@@ -49,7 +59,7 @@ const usePosts = (postId) => {
 
   return {
     post,
-    posts: posts && posts.length ? posts.sort((a,b) => b.id - a.id) : [],
+    posts: posts && posts.length ? posts.sort((a, b) => b.id - a.id) : [],
     loadingPost,
     loadingPosts,
     errorPost,
@@ -58,6 +68,10 @@ const usePosts = (postId) => {
     loadingCreate,
     errorCreate,
     createSuccess,
+    edit,
+    loadingEdit,
+    errorEdit,
+    successEdit,
     deleteFn,
     loadingDelete,
     errorDelete,

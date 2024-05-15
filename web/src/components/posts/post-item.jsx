@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import DeletePostBtn from "./delete-post-btn";
 import { postProps } from "../../PropTypes";
+import EditPostBtn from "./edit-post-btn";
 
 const PostItem = ({ post }) => {
   if (!post) {
@@ -15,7 +16,11 @@ const PostItem = ({ post }) => {
       {post.imageurl ? (
         <div className="w-full max-w-screen-md">
           <Link to={post.imageurl} target="_blank">
-            <img className="w-full rounded" src={post.imageurl} alt={"post-image"} />
+            <img
+              className="w-full rounded"
+              src={post.imageurl}
+              alt={"post-image"}
+            />
           </Link>
         </div>
       ) : null}
@@ -24,7 +29,10 @@ const PostItem = ({ post }) => {
           <button className="whitespace-nowrap">Read more</button>
         </Link>
         <div className="w-full">{post.imagename}</div>
-        <DeletePostBtn post={post} />
+        <div className="flex gap-2">
+          <EditPostBtn post={post} />
+          <DeletePostBtn post={post} />
+        </div>
       </div>
     </div>
   );
