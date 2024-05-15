@@ -4,7 +4,7 @@ import { navlinks } from "../../nav-links";
 const Navbar = () => {
   
   return (
-    <nav className="flex justify-between p-2">
+    <nav className="flex justify-between p-2 shadow-lg">
       <div>
         <Link to="/">Logo</Link>
       </div>

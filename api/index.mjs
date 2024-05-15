@@ -17,7 +17,9 @@ import uploadRoutes from "./routes/uploadRoutes.mjs";
 import postRoutes from "./routes/postRoutes.mjs";
 import mediaRoutes from "./routes/mediaRoutes.mjs";
 
-app.use("/api/images", express.static(path.join(dirname(fileURLToPath(import.meta.url)), "uploads")));
+export const DIRNAME = dirname(fileURLToPath(import.meta.url));
+
+app.use("/api/images", express.static(path.join(DIRNAME, "uploads")));
 
 app.use("/upload", uploadRoutes);
 app.use("/api/posts", postRoutes);

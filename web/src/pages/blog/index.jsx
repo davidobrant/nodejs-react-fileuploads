@@ -1,9 +1,18 @@
-import PostList from "../../components/blog/PostList";
+import PostList from "../../components/posts/post-list";
+import usePosts from "../../hooks/use-posts";
+import Loading from '../../components/loading'
 
 const Post = () => {
+
+  const { posts, loadingPosts} = usePosts()
+
   return (
     <>
-      <PostList />
+      {loadingPosts ? (
+        <Loading />
+      ) : (
+        <PostList posts={posts} />
+      )}
     </>
   );
 };

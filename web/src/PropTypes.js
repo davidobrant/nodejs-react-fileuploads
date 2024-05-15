@@ -9,3 +9,7 @@ export const postProps = {
     id: PropTypes.number,
   }),
 };
+
+export const postsProps = {
+  posts: PropTypes.arrayOf(PropTypes.shape(postProps)).isRequired,
+};
