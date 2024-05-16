@@ -5,17 +5,22 @@ import Gallery from "../pages/gallery";
 import Blog from "../pages/blog";
 import Post from "../pages/post";
 import NewPost from "../pages/post/new-post";
-import App from "../App";
+import Layout from "../layout";
 import EditPost from "../pages/post/edit-post";
+import Login from "../pages/login";
 
 export const router = createBrowserRouter([
   {
     path: "/",
-    element: <App />,
+    element: <Layout />,
     children: [
       {
         path: "/",
         element: <Home />,
+      },
+      {
+        path: "/auth/login",
+        element: <Login />,
       },
       {
         path: "/blog",

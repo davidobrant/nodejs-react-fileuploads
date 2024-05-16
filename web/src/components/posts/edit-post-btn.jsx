@@ -1,4 +1,4 @@
-import { postProps } from "../../PropTypes";
+import { postProps } from "../../prop-types";
 import { useNavigate } from "react-router-dom";
 
 const EditPostBtn = ({ post }) => {

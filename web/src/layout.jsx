@@ -1,8 +1,8 @@
 import { Outlet } from "react-router-dom";
-import Navbar from "./components/navbar/Navbar";
+import Navbar from "./components/navbar/navbar";
 import Footer from "./components/footer";
 
-const App = () => {
+const Layout = () => {
   return (
     <>
       <section className="flex flex-col h-screen">
@@ -18,4 +18,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default Layout;

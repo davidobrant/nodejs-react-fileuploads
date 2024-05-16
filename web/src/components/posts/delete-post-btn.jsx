@@ -1,4 +1,4 @@
-import { postProps } from "../../PropTypes";
+import { postProps } from "../../prop-types";
 import usePosts from "../../hooks/use-posts";
 
 const DeletePostBtn = ({ post }) => {

@@ -13,3 +13,11 @@ export const postProps = {
 export const postsProps = {
   posts: PropTypes.arrayOf(PropTypes.shape(postProps)).isRequired,
 };
+
+export const inputProps = {
+  type: PropTypes.string,
+}
+
+export const childrenProps = {
+  children: PropTypes.node.isRequired
+}

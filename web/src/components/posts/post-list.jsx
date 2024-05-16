@@ -1,4 +1,4 @@
-import { postsProps } from "../../PropTypes";
+import { postsProps } from "../../prop-types";
 import PostItem from "./post-item";
 
 const PostList = ({ posts }) => {

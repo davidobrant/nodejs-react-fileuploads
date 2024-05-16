@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
 import usePosts from "../../hooks/use-posts";
-import { postProps } from "../../PropTypes";
+import { postProps } from "../../prop-types";
 import { useParams } from "react-router-dom";
 
 const EditPostForm = () => {
@@ -49,6 +49,7 @@ const EditPostForm = () => {
         </div>
         <div>
           <textarea
+            className="whitespace-pre-wrap"
             id="content"
             placeholder="content"
             defaultValue={post.content}
@@ -69,10 +70,10 @@ const EditPostForm = () => {
         </div>
         <button
           type="submit"
-        //   disabled={!isValid}
-          className="border border-slate-700 rounded-md px-2 py-.5 cursor-pointer"
+          disabled={!isValid}
+          className="border border-slate-700 rounded-md px-2 py-.5"
         >
-          Save
+          Update
         </button>
       </form>
     </>

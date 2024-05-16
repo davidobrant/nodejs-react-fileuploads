@@ -31,7 +31,6 @@ const NewPostForm = () => {
         className="flex flex-col gap-4 items-center"
       >
         <div>
-          {/* <label htmlFor="title">Title:</label> */}
           <input
             type="text"
             id="title"
@@ -41,8 +40,8 @@ const NewPostForm = () => {
           {errors.title && <p>{errors.title.message}</p>}
         </div>
         <div>
-          {/* <label htmlFor="content">Content:</label> */}
           <textarea
+            className="whitespace-pre-wrap"
             id="content"
             placeholder="content"
             {...register("content", { required: "Content is required" })}
@@ -50,20 +49,14 @@ const NewPostForm = () => {
           {errors.content && <p>{errors.content.message}</p>}
         </div>
         <div>
-          {/* <label htmlFor="image">Image:</label> */}
-          <input
-            type="file"
-            id="image"
-            {...register("image")}
-            placeholder="image"
-          />
+          <input type="file" id="image" {...register("image")} />
         </div>
         <button
           type="submit"
           disabled={!isValid}
-          className="border border-slate-700 rounded-md px-2 py-.5 cursor-pointer"
+          className="border border-slate-700 rounded-md px-2 py-.5 cursor-pointer disabled:cursor-not-allowed"
         >
-          Submit
+          Create
         </button>
       </form>
     </>
