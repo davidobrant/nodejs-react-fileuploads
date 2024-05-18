@@ -10,16 +10,4 @@ const api = axios.create({
   },
 });
 
-api.interceptors.response.use(
-  (res) => res,
-  (err) => {
-    if (err.response && err.response.status === 401) {
-      console.log("error... 401");
-    } else {
-      console.log(err.message);
-    }
-    return Promise.reject(err);
-  }
-);
-
 export default api;

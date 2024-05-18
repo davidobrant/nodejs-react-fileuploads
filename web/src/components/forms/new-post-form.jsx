@@ -1,11 +1,13 @@
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 import usePosts from "../../hooks/use-posts";
 
 const NewPostForm = () => {
+  const navigate = useNavigate();
+
   const {
     register,
     handleSubmit,
-    reset,
     formState: { errors, isValid },
   } = useForm();
 
@@ -20,7 +22,7 @@ const NewPostForm = () => {
     }
 
     await create(formData, {
-      onSuccess: () => reset(),
+      onSuccess: () => navigate("/blog"),
     });
   };
 
@@ -29,6 +31,7 @@ const NewPostForm = () => {
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="flex flex-col gap-4 items-center"
+        encType="multipart/form-data"
       >
         <div>
           <input

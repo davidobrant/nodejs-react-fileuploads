@@ -11,16 +11,16 @@ const NavAuth = () => {
   return (
     <>
       {auth ? (
-        <>
-          <span className="mr-2">{user.username}</span>
-          <Button onClick={logout} icon={<FiLogOut />}>
+        <div className="flex items-center">
+          <p className="mr-2 text-sm align-middle ">{user.username}</p>
+          <NavAuthBtn onClick={logout} icon={<FiLogOut />}>
             Logout
-          </Button>
-        </>
+          </NavAuthBtn>
+        </div>
       ) : (
-        <Button onClick={() => navigate("/auth/login")} icon={<FiLogIn />}>
+        <NavAuthBtn onClick={() => navigate("/auth/login")} icon={<FiLogIn />}>
           Login
-        </Button>
+        </NavAuthBtn>
       )}
     </>
   );
@@ -28,7 +28,7 @@ const NavAuth = () => {
 
 export default NavAuth;
 
-const Button = ({ children, className = "", icon, ...rest }) => {
+const NavAuthBtn = ({ children, className = "", icon, ...rest }) => {
   return (
     <button
       className={`bg-slate-200 hover:bg-slate-300 shadow-sm rounded px-2 flex items-center ${className}`}
@@ -40,7 +40,7 @@ const Button = ({ children, className = "", icon, ...rest }) => {
   );
 };
 
-Button.propTypes = {
+NavAuthBtn.propTypes = {
   children: PropTypes.node.isRequired,
   className: PropTypes.string,
   icon: PropTypes.element,

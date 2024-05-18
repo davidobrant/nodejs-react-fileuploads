@@ -8,7 +8,7 @@ import { ERROR } from "../utils/response-messages.js";
 
 export const postController = {};
 
-postController.getAllPosts = async (_, res) => {
+postController.getAllPosts = async (req, res) => {
   try {
     const posts = await db.getAllPosts();
     res.status(200).json(posts);
@@ -78,7 +78,6 @@ postController.updatePost = async (req, res) => {
 
       if (!title || !content) {
         res.status(400).json({ error: "Title and content are required" });
-        return;
       }
 
       let newImageUrl;
@@ -108,14 +107,11 @@ postController.updatePost = async (req, res) => {
 
       const updatedPostData = {
         id: postId,
-        title,
-        content,
+        title: title ?? postToUpdate.title,
+        content: content ?? postToUpdate.content,
+        imageUrl: newImageUrl ?? postToUpdate.imageurl,
+        imageName: newImageName ?? postToUpdate.imagename,
       };
-
-      if (newImageUrl) {
-        updatedPostData.imageUrl = newImageUrl;
-        updatedPostData.imageName = newImageName;
-      }
 
       const updatedPost = await db.updatePost(updatedPostData);
       res.status(200).json(updatedPost);

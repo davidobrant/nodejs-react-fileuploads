@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import useAuth from "../../hooks/use-auth";
-import Input from "./input";
+import Input from "../generics/input";
 import PropTypes from "prop-types";
 
 const LoginForm = () => {
@@ -21,8 +21,8 @@ const LoginForm = () => {
       await login({ username, password });
       navigate("..");
     } catch (err) {
-      alert("login failed...");
-      navigate("/");
+      console.log("LOGIN FAILED...");
+      navigate("..");
     }
   };
 

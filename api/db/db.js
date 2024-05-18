@@ -2,6 +2,8 @@ import { client } from "../config/client.mjs";
 
 export const db = {};
 
+/* ----- ----- ----- POSTS ----- ----- ----- */
+
 db.getAllPosts = async () => {
   const result = await client.query("SELECT * FROM posts");
   return result.rows;
@@ -32,3 +34,13 @@ db.deletePost = async (postId) => {
   const result = await client.query("DELETE FROM posts WHERE id = $1 RETURNING *;", [postId]);
   return result.rows[0];
 };
+
+/* --x-- --x-- --x-- POSTS --x-- --x-- --x-- */
+/* ----- ----- ----- USERS ----- ----- ----- */
+
+db.getUserByUsername = async (username) => {
+  const result = await client.query("SELECT * FROM users WHERE username = $1", [username])
+  return result.rows[0]
+}
+
+/* --x-- --x-- --x-- USERS --x-- --x-- --x-- */

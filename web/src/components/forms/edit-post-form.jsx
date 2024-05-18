@@ -1,16 +1,17 @@
 import { useForm } from "react-hook-form";
 import usePosts from "../../hooks/use-posts";
-import { postProps } from "../../prop-types";
-import { useParams } from "react-router-dom";
+import { childrenProps, postProps } from "../../prop-types";
+import { useNavigate, useParams } from "react-router-dom";
+import Image from "../generics/image";
 
 const EditPostForm = () => {
+  const navigate = useNavigate();
   const { id } = useParams();
   const { post, edit } = usePosts(id);
 
   const {
     register,
     handleSubmit,
-    reset,
     formState: { errors, isValid },
   } = useForm();
 
@@ -22,9 +23,7 @@ const EditPostForm = () => {
       formData.append("image", data.image[0]);
     }
 
-    await edit(formData, {
-      onSuccess: () => reset(),
-    });
+    await edit(formData, { onSuccess: () => navigate(-1) });
   };
 
   if (!post) {
@@ -32,10 +31,10 @@ const EditPostForm = () => {
   }
 
   return (
-    <>
+    <PostCardContainer>
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="flex flex-col gap-4 items-center"
+        className="flex flex-col gap-4 items-center bg-slate-100 shadow-lg p-4 rounded"
       >
         <div>
           <input
@@ -59,11 +58,12 @@ const EditPostForm = () => {
         </div>
         <div className="flex flex-col items-center">
           {post.imageurl && (
-            <img
+            <Image
               src={post.imageurl}
               alt="post"
-              style={{ maxWidth: "100px" }}
-              className="mb-4"
+              shadow
+              scale
+              className="mb-4 max-w-20"
             />
           )}
           <input type="file" id="image" {...register("image")} />
@@ -76,10 +76,16 @@ const EditPostForm = () => {
           Update
         </button>
       </form>
-    </>
+    </PostCardContainer>
   );
 };
 
 export default EditPostForm;
 
 EditPostForm.propTypes = postProps;
+
+const PostCardContainer = ({ children }) => {
+  return <div>{children}</div>;
+};
+
+PostCardContainer.propTypes = childrenProps;
